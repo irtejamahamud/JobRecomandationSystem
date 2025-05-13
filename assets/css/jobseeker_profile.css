@@ -1,0 +1,428 @@
+/* jobseeker_profile_style.css */
+
+.profile-wrapper {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #fffdfa;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .profile-tab-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    padding-bottom: 12px;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #f2f2f2;
+    flex-wrap: wrap; /* Good for mobile */
+  }
+  
+  .profile-tab {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    padding: 8px 0;
+    position: relative;
+    transition: color 0.3s ease;
+  }
+  
+  .profile-tab i {
+    font-size: 18px;
+    transition: color 0.3s ease;
+  }
+  
+  .profile-tab:hover {
+    color: #ff6600;
+  }
+  
+  .profile-tab.active {
+    color: #ff6600;
+    font-weight: 600;
+  }
+  
+  .profile-tab.active i {
+    color: #ff6600;
+  }
+  
+  .profile-tab::after {
+    content: "";
+    display: none;
+    position: absolute;
+    bottom: -12px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #ff6600;
+    border-radius: 3px;
+  }
+  
+  .profile-tab.active::after {
+    display: block;
+  }
+  
+  .tab-wrapper {
+    display: flex;
+    justify-content: center;
+    overflow-x: auto;
+  }
+    
+ /*  .progress-bar {
+    height: 14px;
+    background: #f0f0f0;
+    border-radius: 30px;
+    margin-bottom: 30px;
+    overflow: hidden;
+  }
+  
+  .progress-bar .progress {
+    height: 100%;
+    background: #ff6600;
+    color: white;
+    font-size: 12px;
+    text-align: right;
+    padding-right: 10px;
+    line-height: 14px;
+    border-radius: 30px;
+  }*/ 
+
+  
+  .profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .upload-section {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .upload-box {
+    flex: 1;
+    padding: 20px;
+    border: 2px dashed #ffccaa;
+    background: #fff6f1;
+    text-align: center;
+    border-radius: 8px;
+  }
+  
+  .upload-box input[type="file"] {
+    display: block;
+    margin: 0 auto 10px auto;
+  }
+  
+  .upload-box p {
+    font-size: 13px;
+    color: #333;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group label {
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #333;
+  }
+  
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+  }
+  
+  .btn-submit {
+    background: #ff6600;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    margin-top: 20px;
+    width: 200px;
+    align-self: flex-end;
+  }
+  
+  .btn-submit:hover {
+    background: #e65c00;
+  }
+  .form-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .form-row .form-group {
+    flex: 1;
+    min-width: 200px;
+  }.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  
+  .full-width {
+    grid-column: span 2;
+  }
+
+  .row-2col {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .row-2col .form-group {
+    flex: 1;
+  }
+  .row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .row select,
+  .row input {
+    flex: 1;
+    padding: 10px;
+    font-size: 14px;
+  }
+  .upload-box.wide {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .success {
+    background: #e1f7d5;
+    border: 1px solid #a5d6a7;
+    color: #2e7d32;
+    padding: 10px 15px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-weight: 500;
+  }
+  
+  
+  .profile-form input[type="url"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+.profile-form .full-width {
+    grid-column: span 2;
+}
+
+.tab-nav .tab.active {
+    background-color: #ff6a00;
+    color: #fff;
+}
+
+.btn-submit {
+    background: #ff6a00;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-submit:hover {
+    background: #e55b00;
+}
+.input-icon {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.input-icon .input-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 5px;
+}
+
+.input-label i {
+  font-size: 20px;
+  color: #ff6600;
+}
+
+.input-label span {
+  font-size: 15px;
+  font-weight: 500;
+  color: #333;
+}
+
+.input-icon input {
+  padding: 10px 15px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 100%;
+}
+/* New Improved Resume Upload */
+.upload-resume-card {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.upload-resume-box {
+  display: inline-block;
+  width: 400px;
+  height: 150px;
+  border: 2px dashed #ffccaa;
+  border-radius: 12px;
+  padding: 20px;
+  cursor: pointer;
+  background-color: #fff6f1;
+  transition: 0.3s ease;
+}
+.upload-resume-box:hover {
+  background-color: #fff0e6;
+}
+
+.upload-resume-box i {
+  font-size: 40px;
+  color: #ff6600;
+}
+
+.upload-resume-box p {
+  font-weight: bold;
+  margin-top: 10px;
+  color: #333;
+}
+
+.upload-resume-box small {
+  color: gray;
+  display: block;
+  margin-top: 5px;
+}
+
+.resume-title-input {
+  margin-top: 15px;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.resume-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.resume-card {
+  background: #fff;
+  padding: 20px;
+  border: 1px solid #eee;
+  width: 260px;
+  border-radius: 10px;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: 0.3s;
+}
+
+.resume-card:hover {
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.resume-icon {
+  font-size: 35px;
+  color: #ff6600;
+}
+
+.resume-details h4 {
+  margin: 10px 0 5px;
+  font-size: 16px;
+  color: #333;
+}
+
+.resume-details p {
+  font-size: 14px;
+  color: gray;
+}
+
+.resume-options {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.dropbtn {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 30px;
+  background: #fff;
+  border: 1px solid #ddd;
+  min-width: 130px;
+  z-index: 1;
+  border-radius: 5px;
+}
+
+.dropdown-content a {
+  padding: 10px 15px;
+  display: block;
+  text-decoration: none;
+  color: black;
+}
+
+.dropdown-content a:hover {
+  background-color: #ffe5d3;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+.btn-submit {
+  background: #ff6600;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+  display: inline-block;
+  text-decoration: none; /* REMOVE underline */
+  font-weight: 600;
+  text-align: center;
+}
+
+.btn-submit:hover {
+  background: #e65c00;
+  text-decoration: none; /* Ensure no underline even on hover */
+}
+

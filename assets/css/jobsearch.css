@@ -1,0 +1,369 @@
+/* Main Container */
+.jobsearch-container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 30px;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Title */
+.jobsearch-title {
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+.jobsearch-sub {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 25px;
+}
+
+/* Grid layout */
+.jobsearch-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 30px;
+}
+
+/* Sidebar Filters */
+.jobsearch-filters {
+  background: #fff6f1;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  font-size: 14px;
+}
+
+.filter-group {
+  margin-bottom: 25px;
+}
+
+.filter-group label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+  font-size: 14px;
+}
+
+/* Search Box */
+.search-box {
+  position: relative;
+}
+.search-box i {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  color: #999;
+}
+.search-box input {
+  padding-left: 34px;
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+/* Select and Inputs */
+.filter-group select, .filter-group input[type="text"], .filter-group input[type="range"] {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+/* Checkboxes */
+.checkbox-list label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-weight: 400;
+  color: #555;
+}
+
+.checkbox-list input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+/* Range salary */
+.salary-filter .salary-range {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+}
+.salary-filter .apply-btn {
+  background: #ff6600;
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  font-size: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Badges */
+.badge {
+  background: #eee;
+  color: #555;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-left: auto;
+}
+
+/* Show More button */
+.show-more-btn {
+  background: #ff6600;
+  color: #fff;
+  font-size: 12px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+/* Tag list */
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.tag-list span {
+  background: #e6e6e6;
+  color: #444;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 20px;
+}
+
+/* Hiring Banner */
+.hiring-banner {
+  background: #ff6600;
+  color: white;
+  text-align: center;
+  padding: 40px 20px;
+  border-radius: 10px;
+  margin-top: 30px;
+}
+.hiring-banner .overlay h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+.hiring-banner .overlay p {
+  font-size: 14px;
+}
+
+/* --- Job Results Section --- */
+.jobsearch-results {
+  width: 100%;
+}
+.result-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.result-meta p {
+  font-size: 14px;
+  color: #666;
+}
+.sort-select {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* Job Card */
+.job-card {
+  display: flex;
+  justify-content: space-between;
+  background: #fffaf4;
+  border-radius: 12px;
+  padding: 30px;
+  margin-bottom: 25px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  border: 1px solid transparent;
+  transition: 0.3s;
+}
+.job-card:hover {
+  background: #fff4e6;
+  border: 1px dotted #ff6600;
+}
+
+/* Left (badge and logo) */
+.card-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 25px;
+}
+.time-badge {
+  background: #ffe5dc;
+  color: #ff6600;
+  padding: 4px 12px;
+  font-size: 12px;
+  border-radius: 20px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.job-logo img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  border-radius: 25px;
+}
+
+/* Middle */
+.card-middle {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.card-middle h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  color: #222;
+}
+.card-middle .company {
+  font-size: 13px;
+  color: #666;
+  margin: 6px 0 12px 0;
+}
+.job-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  font-size: 13px;
+  color: #555;
+}
+.job-meta span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.job-meta i {
+  font-size: 14px;
+  color: #ff6600;
+}
+
+/* Right (Button) */
+.card-right {
+  display: flex;
+  align-items: center;
+}
+.details-btn {
+  background: #ff6600;
+  color: white;
+  margin-top: 30px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: 0.3s;
+}
+.details-btn:hover {
+  background: #e65c00;
+  box-shadow: 0 3px 10px rgba(255, 102, 0, 0.2);
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  gap: 10px;
+}
+.pagination .page {
+  padding: 8px 14px;
+  border-radius: 6px;
+  background: #f4f4f4;
+  color: #333;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: 0.2s;
+}
+.pagination .page.active {
+  background: #ff6600;
+  color: white;
+}
+.pagination .page:hover:not(.active) {
+  background: #e2e2e2;
+}
+/* Fix search input style same as select */
+.filter-group input[type="text"] {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  margin-top: 5px;
+  box-sizing: border-box;
+  transition: 0.3s;
+}
+
+.filter-group input[type="text"]:focus {
+  border-color: #ff6600;
+  outline: none;
+}
+
+/* Bookmark wrapper */
+.bookmark-wrapper {
+  position: absolute;
+  top: 20px;
+  right: 50px; /* 🔥 changed from 20px to 50px */
+  font-size: 22px;
+  color: #999;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.bookmark-wrapper:hover {
+  color: #ff6600;
+  transform: scale(1.2);
+}
+
+
+/* Important: Make sure .job-card has relative position */
+.job-card {
+  position: relative; /* 🧡 Must have */
+  display: flex;
+  justify-content: space-between;
+  background: #fffaf4;
+  border-radius: 12px;
+  padding: 30px;
+  margin-bottom: 25px;
+  margin-right: 30px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  border: 1px solid transparent;
+  transition: 0.3s;
+}
+.section-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 30px 0 20px;
+  color: #222;
+}
+/* ⭐ Recommended Badge */
+.recommended-badge {
+  background-color: #ff3f3f;
+  color: #000;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  display: inline-block;
+  margin-bottom: 6px;
+  margin-top: 2px;
+  line-height: 1;
+}
+
+

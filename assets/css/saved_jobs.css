@@ -1,0 +1,143 @@
+.saved-jobs-container {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 20px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.page-title {
+    font-size: 32px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.jobs-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px; /* 🌟 this makes gap between cards */
+    justify-content: center;
+}
+
+/* Single Card */
+.job-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 25px 20px;
+    width: 280px; /* 🌟 fixed width */
+    height: 200px; /* 🌟 fixed height */
+    box-shadow: 0px 8px 16px rgba(17, 17, 17, 0.08);
+    border: 1px solid #f0f0f0;
+    transition: 0.3s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.job-card:hover {
+    border-color: #ff6600;
+    box-shadow: 0px 10px 20px rgba(255, 102, 0, 0.15);
+}
+
+/* Badge for Job Level */
+.job-type-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: #28a745;
+    color: #ffffff;
+    padding: 5px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-radius: 9999px;
+}
+
+/* Company logo */
+.company-logo {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.company-logo img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+}
+
+/* Job Title */
+.job-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #222222;
+    text-align: center;
+    margin-bottom: 4px;
+}
+
+/* Company Name */
+.company-name {
+    font-size: 14px;
+    color: #666666;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Location and Salary */
+.location-salary {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+    color: #555555;
+}
+
+.location-salary span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.location-salary i {
+    color: #ff6600;
+    font-size: 14px;
+}
+
+/* Bookmark Icon */
+.bookmark-icon {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 20px;
+    color: #ccc;
+}
+
+.bookmark-icon i {
+    transition: 0.3s ease;
+}
+
+.bookmark-icon:hover i {
+    color: #ff6600;
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+    .jobs-grid {
+        gap: 20px;
+    }
+    .job-card {
+        width: 300px;
+    }
+}
+
+@media (max-width: 600px) {
+    .jobs-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+    .job-card {
+        width: 90%;
+    }
+}

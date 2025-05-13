@@ -1,0 +1,1 @@
+{"recommended_jobs": [{"job_id": 15, "similarity": 0.1353}, {"job_id": 18, "similarity": 0.0624}, {"job_id": 17, "similarity": 0.0}, {"job_id": 16, "similarity": 0.0}, {"job_id": 14, "similarity": 0.0}, {"job_id": 13, "similarity": 0.0}, {"job_id": 12, "similarity": 0.0}, {"job_id": 11, "similarity": 0.0}, {"job_id": 9, "similarity": 0.0}, {"job_id": 8, "similarity": 0.0}]}
