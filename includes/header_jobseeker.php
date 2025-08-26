@@ -34,8 +34,26 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
       <div class="user-icons">
         <div class="icon-wrapper">
-          <i class="fas fa-bell"></i>
+          <i class="fas fa-bell" id="notificationBell" style="cursor:pointer;"></i>
         </div>
+        <!-- Notification Modal -->
+        <div id="notificationModal" style="display:none;position:fixed;top:0;right:0;width:350px;height:100vh;z-index:99999;background:transparent;">
+          <iframe src="../user/notification_user.php" style="width:100%;height:100%;border:none;box-shadow:-2px 0 16px rgba(0,0,0,0.08);"></iframe>
+        </div>
+        <script>
+          document.addEventListener('DOMContentLoaded', function() {
+            var bell = document.getElementById('notificationBell');
+            var modal = document.getElementById('notificationModal');
+            bell.onclick = function() {
+              modal.style.display = 'block';
+            };
+            window.addEventListener('message', function(e) {
+              if(e.data === 'closeNotification') {
+                modal.style.display = 'none';
+              }
+            });
+          });
+        </script>
         <div class="user-dropdown">
           <img src="../assets/img/profile.png" alt="User"
                onerror="this.onerror=null;this.src='https://cdn-icons-png.flaticon.com/512/1144/1144760.png';" />
