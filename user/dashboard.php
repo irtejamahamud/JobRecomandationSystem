@@ -82,7 +82,7 @@ $completion = ($total_fields > 0) ? round(($filled_fields / $total_fields) * 100
     <div class="card orange-card">
       <h3>Profile</h3>
       <p>Edit your details</p>
-      <a href="settings.php" class="dashboard-btn">Update Profile</a>
+      <a href="step1_personal.php" class="dashboard-btn">Update Profile</a>
     </div>
   </div>
 
