@@ -50,6 +50,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
         <!-- <a href="recommended_jobs.php" class="<?= ($current_page == 'recommended_jobs.php') ? 'active' : '' ?>">Recommended</a> -->
         <a href="applied_jobs.php" class="<?= ($current_page == 'applied_jobs.php') ? 'active' : '' ?>">Applied Jobs</a>
         <a href="job_seeker_profile.php" class="<?= ($current_page == 'job_seeker_profile.php') ? 'active' : '' ?>">Profile</a>
+        <a href="generate_cv.php" class="<?= ($current_page == 'generate_cv.php') ? 'active' : '' ?>">Generate CV</a>
       </nav>
 
       <div class="user-icons">
