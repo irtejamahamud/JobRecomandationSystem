@@ -3,6 +3,26 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+// Default profile image
+$profile_img = "https://cdn-icons-png.flaticon.com/512/1144/1144760.png";
+
+// Load user profile image if available
+if (isset($_SESSION['user_id'])) {
+  $user_id = $_SESSION['user_id'];
+  include_once("../includes/db.php");
+  // Try to get profile image from job_seekers table
+  try {
+    $stmt = $conn->prepare("SELECT profile_image FROM job_seekers WHERE job_seeker_id = ?");
+    $stmt->execute([$user_id]);
+    $img = $stmt->fetchColumn();
+    if (!empty($img)) {
+      $profile_img = "../uploads/profile/" . $img;
+    }
+  } catch (PDOException $e) {
+    // Ignore and use default image
+  }
+}
+
 // Get current page filename
 $current_page = basename($_SERVER['PHP_SELF']);
 ?>
@@ -55,8 +75,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
           });
         </script>
         <div class="user-dropdown">
-          <img src="../assets/img/profile.png" alt="User"
-               onerror="this.onerror=null;this.src='https://cdn-icons-png.flaticon.com/512/1144/1144760.png';" />
+    <img src="<?= $profile_img ?>" alt="User"
+      onerror="this.onerror=null;this.src='https://cdn-icons-png.flaticon.com/512/1144/1144760.png';" />
                <ul class="dropdown-menu">
   <li><a href="step1_personal.php"><i class="fas fa-user-cog"></i> Settings</a></li>
   <li><a href="bookmarks_job.php"><i class="fas fa-bookmark"></i> Bookmarks</a></li>
