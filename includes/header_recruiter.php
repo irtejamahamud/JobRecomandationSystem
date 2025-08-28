@@ -49,9 +49,31 @@ $current_page = basename($_SERVER['PHP_SELF']);
       </nav>
 
       <div class="user-icons">
-        <div class="icon-wrapper">
-          <i class="fas fa-bell"></i>
+        <div class="icon-wrapper" id="notificationBell" style="position:relative;">
+          <i class="fas fa-bell" style="cursor:pointer;"></i>
         </div>
+        <!-- Notification Modal Panel -->
+        <div id="notificationModal" style="display:none;position:fixed;top:0;right:0;width:350px;height:100vh;z-index:10000;background:transparent;">
+          <iframe src="../employer/notification_emp.php" style="width:100%;height:100%;border:none;background:transparent;"></iframe>
+        </div>
+  <script>
+    // Show notification panel when bell is clicked
+    document.addEventListener('DOMContentLoaded', function() {
+      var bell = document.getElementById('notificationBell');
+      var modal = document.getElementById('notificationModal');
+      if(bell && modal) {
+        bell.addEventListener('click', function(e) {
+          modal.style.display = 'block';
+        });
+      }
+      // Listen for closeNotification message from iframe
+      window.addEventListener('message', function(event) {
+        if(event.data === 'closeNotification') {
+          modal.style.display = 'none';
+        }
+      });
+    });
+  </script>
 
         <div class="user-dropdown">
           <img src="<?= $logo_path ?>" alt="User"
