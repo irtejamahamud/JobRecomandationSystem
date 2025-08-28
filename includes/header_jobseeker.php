@@ -47,7 +47,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
         <a href="dashboard.php" class="<?= ($current_page == 'dashboard.php') ? 'active' : '' ?>">Home</a>
         <a href="job_search_demo.php" class="<?= ($current_page == 'job_search_demo.php') ? 'active' : '' ?>">Find Jobs</a>
         <!--<a href="job_search.php" class="<?= ($current_page == 'job_search.php') ? 'active' : '' ?>">Find Jobs</a> -->
-        <!--<a href="recommended_jobs.php" class="<?= ($current_page == 'recommended_jobs.php') ? 'active' : '' ?>">Recommended</a> -->
+        <!-- <a href="recommended_jobs.php" class="<?= ($current_page == 'recommended_jobs.php') ? 'active' : '' ?>">Recommended</a> -->
         <a href="applied_jobs.php" class="<?= ($current_page == 'applied_jobs.php') ? 'active' : '' ?>">Applied Jobs</a>
         <a href="job_seeker_profile.php" class="<?= ($current_page == 'job_seeker_profile.php') ? 'active' : '' ?>">Profile</a>
       </nav>
