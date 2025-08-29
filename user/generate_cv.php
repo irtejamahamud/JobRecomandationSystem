@@ -120,7 +120,7 @@ $latestResume = $resumeStmt->fetchColumn();
 
   body { background: #f6f7fb; font-family: 'Poppins', Arial, sans-serif; }
   .cv-toolbar.no-print {
-    position: sticky; top: 0; z-index: 1000; background: #fff; border-bottom: 1px solid #eee;
+    position: sticky; top: 0; z-index: -1; background: #fff; border-bottom: 1px solid #eee;
     padding: 10px 16px; display: flex; gap: 10px; justify-content: flex-end;
   }
   .cv-toolbar .btn {
