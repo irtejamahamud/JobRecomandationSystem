@@ -48,9 +48,9 @@ $totalJobs = count($jobs);
         <label><i class="fas fa-map-marker-alt"></i> Location</label>
         <select>
           <option selected>Choose city</option>
-          <option>New York</option>
-          <option>Texas</option>
-          <option>California</option>
+          <option>Dhaka</option>
+          <option>Madaripur</option>
+          <option>Barishal</option>
         </select>
       </div>
 
