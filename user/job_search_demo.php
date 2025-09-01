@@ -120,9 +120,9 @@ $totalPages = ceil($totalJobs / $limit);
         <label><i class="fas fa-map-marker-alt"></i> Location</label>
         <select name="city">
           <option <?= empty($_GET['city']) ? 'selected' : '' ?>>Choose city</option>
-          <option <?= (@$_GET['city'] == 'New York') ? 'selected' : '' ?>>New York</option>
-          <option <?= (@$_GET['city'] == 'Texas') ? 'selected' : '' ?>>Texas</option>
-          <option <?= (@$_GET['city'] == 'California') ? 'selected' : '' ?>>California</option>
+          <option <?= (@$_GET['city'] == 'Dhaka') ? 'selected' : '' ?>>Dhaka</option>
+          <option <?= (@$_GET['city'] == 'Madaripur') ? 'selected' : '' ?>>Madaripur</option>
+          <option <?= (@$_GET['city'] == 'Barishal') ? 'selected' : '' ?>>Barishal</option>
         </select>
       </div>
 
