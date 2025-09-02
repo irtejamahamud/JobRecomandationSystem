@@ -182,7 +182,7 @@
     <div class="news-blog-heading">
       <div>
         <h2>News and Blog</h2>
-        <p>Metus faucibus sed turpis lectus feugiat tincidunt. Rhoncus tristique in dolor.</p>
+        <p>Effective training and teamwork lead to success. Overcoming challenges together.</p>
       </div>
       <a href="#" class="view-all-link">View all</a>
     </div>
