@@ -217,8 +217,6 @@
   </div>
 </section>
 
-
-
 <!-- Why Choose Us -->
 <section class="why-choose-us">
   <div class="container">
