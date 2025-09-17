@@ -196,7 +196,7 @@
         </div>
         <div class="news-blog-content">
           <small>30 March 2024</small>
-          <h3>Revitalizing Workplace Morale: Innovative Tactics For Boosting Employee Engagement In 2024</h3>
+          <h3>Revitalizing Workplace Morale: Innovative Tactics For Boosting Employee Engagement In 2025</h3>
           <a href="#" class="read-more">Read more →</a>
         </div>
       </div>
