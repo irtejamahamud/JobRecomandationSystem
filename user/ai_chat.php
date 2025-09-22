@@ -37,6 +37,18 @@ include_once('../includes/header_jobseeker.php');
     .toolbar { display:flex; gap:10px; align-items:center; padding:10px 18px; }
     .toolbar label { font-size:13px; color:var(--muted); display:flex; gap:6px; align-items:center; }
     .raw-output { font-family: monospace; font-size:12px; color:#243b53; background:#f1f7ff; padding:8px; border-radius:8px; margin:8px 18px; display:none; white-space:pre-wrap; }
+  /* Model picker styles */
+  .model-picker { display:flex; flex-direction:column; gap:6px; min-width:220px; }
+  .model-label { font-size:12px; color:var(--muted); }
+  .model-select { position:relative; }
+  .model-current { display:flex; align-items:center; gap:8px; width:100%; background:#fff; border:1px solid #e6eefc; padding:8px 10px; border-radius:8px; cursor:pointer; font-weight:600; color:var(--text); }
+  .model-current .badge { background:#eef6ff; color:#0b2a66; padding:2px 6px; border-radius:999px; font-size:11px; margin-left:8px; font-weight:700; }
+  .model-list { display:none; position:absolute; top:calc(100% + 8px); left:0; right:0; background:#fff; border:1px solid #e6eefc; border-radius:10px; box-shadow:0 8px 24px rgba(15,23,42,.06); list-style:none; margin:0; padding:8px; z-index:50; }
+  .model-list li { padding:10px; border-radius:8px; cursor:pointer; }
+  .model-list li:hover { background:#f8fafc; }
+  .model-list li.selected { background:#eef6ff; }
+  .model-list .meta { font-size:12px; color:var(--muted); margin-top:4px; }
+  .model-info { font-size:12px; color:var(--muted); }
   </style>
   <script>
     const SYSTEM_PROMPT = `You are NextWorkX AI Job Assistant. Be concise, practical, and friendly.
@@ -58,13 +70,17 @@ When asked for code or examples, provide short, clear snippets. If asked about t
       <div class="hint">Ask about skills to learn, interview prep, resume bullets, or tailoring to a specific job.</div>
       <div class="toolbar">
         <label><input type="checkbox" id="debugToggle"> Enable debug (show raw response when assistant reply is empty)</label>
-        <label style="margin-left:12px;">
-          Model:
-          <select id="modelSelect">
-            <option value="google/gemini-2.0-flash-exp:free" selected>Gemini 2.0 Flash (free)</option>
-            <option value="deepseek/deepseek-r1:free">DeepSeek R1 (free)</option>
-          </select>
-        </label>
+        <div class="model-picker" style="margin-left:12px;">
+          <div class="model-label">Model</div>
+          <div class="model-select" id="modelSelectEl">
+            <button class="model-current" id="modelCurrent">Gemini 2.0 Flash <span class="badge">free</span> <i class="fa fa-caret-down"></i></button>
+            <ul class="model-list" id="modelList" aria-hidden="true">
+              <li data-value="google/gemini-2.0-flash-exp:free" class="selected"><strong>Gemini 2.0 Flash</strong><div class="meta">Fast experimental Gemini (vision & text)</div></li>
+              <li data-value="deepseek/deepseek-r1:free"><strong>DeepSeek R1</strong><div class="meta">Lightweight recruiter-focused model</div></li>
+            </ul>
+          </div>
+          <div class="model-info" id="modelInfo">Fast experimental Gemini (vision & text)</div>
+        </div>
       </div>
       <div class="examples">
         <button data-eg="List 5 in-demand skills for a junior web developer and beginner resources.">Skills for junior web developer</button>
@@ -87,7 +103,52 @@ When asked for code or examples, provide short, clear snippets. If asked about t
   const sendBtn = document.getElementById('sendBtn');
   const debugToggle = document.getElementById('debugToggle');
   const rawEl = document.getElementById('raw');
-  const modelSelect = document.getElementById('modelSelect');
+  // model picker elements
+  // modelSelect will be queried at send time (hidden input created dynamically)
+  const modelSelectEl = document.getElementById('modelSelectEl');
+  const modelCurrent = document.getElementById('modelCurrent');
+  const modelList = document.getElementById('modelList');
+  const modelInfo = document.getElementById('modelInfo');
+
+  // hidden input to maintain backward compatibility
+  let hiddenModelInput = document.getElementById('modelSelect');
+  if (!hiddenModelInput) {
+    hiddenModelInput = document.createElement('input');
+    hiddenModelInput.type = 'hidden';
+    hiddenModelInput.id = 'modelSelect';
+    hiddenModelInput.value = 'google/gemini-2.0-flash-exp:free';
+    document.querySelector('.toolbar').appendChild(hiddenModelInput);
+  }
+
+  // Toggle list
+  modelCurrent && modelCurrent.addEventListener('click', () => {
+    const open = modelList.style.display === 'block';
+    modelList.style.display = open ? 'none' : 'block';
+    modelList.setAttribute('aria-hidden', open ? 'true' : 'false');
+  });
+
+  // Click outside to close
+  document.addEventListener('click', (e) => {
+    if (!modelSelectEl.contains(e.target)) {
+      modelList.style.display = 'none';
+      modelList.setAttribute('aria-hidden', 'true');
+    }
+  });
+
+  // Select model
+  modelList.querySelectorAll('li').forEach(li => {
+    li.addEventListener('click', () => {
+      modelList.querySelectorAll('li').forEach(x => x.classList.remove('selected'));
+      li.classList.add('selected');
+      const value = li.getAttribute('data-value');
+      const label = li.querySelector('strong')?.innerText || value;
+      const meta = li.querySelector('.meta')?.innerText || '';
+      modelCurrent.innerHTML = label + ' <span class="badge">free</span> <i class="fa fa-caret-down"></i>';
+      modelInfo.textContent = meta;
+      hiddenModelInput.value = value;
+      modelList.style.display = 'none';
+    });
+  });
 
     const history = [ { role: 'system', content: SYSTEM_PROMPT } ];
 
@@ -123,7 +184,8 @@ When asked for code or examples, provide short, clear snippets. If asked about t
       inputEl.value = '';
       setLoading(true);
       try {
-  const model = modelSelect ? modelSelect.value : 'google/gemini-2.0-flash-exp:free';
+  const modelEl = document.getElementById('modelSelect');
+  const model = (modelEl && modelEl.value) ? modelEl.value : 'google/gemini-2.0-flash-exp:free';
   const payload = { model, messages: history };
         if (debugToggle && debugToggle.checked) payload.debug = true;
         const res = await fetch('../ajax/openrouter_chat.php', {
