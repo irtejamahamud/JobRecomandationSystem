@@ -10,7 +10,7 @@
       <h4 style="color:#FF6600;margin-bottom:6px;font-size:15px;">Quick links</h4>
       <ul style="list-style:none;padding:0;margin:0;color:#555;line-height:1.8;font-size:14px;">
         <li><a href="/user/dashboard.php" style="color:inherit;text-decoration:none;">Dashboard</a></li>
-        <li><a href="/user/job_search_demo.php" style="color:inherit;text-decoration:none;">Find Jobs</a></li>
+        <li><a href="/user/job_search.php" style="color:inherit;text-decoration:none;">Find Jobs</a></li>
         <li><a href="/user/recommended_jobs.php" style="color:inherit;text-decoration:none;">Recommended</a></li>
         <li><a href="/user/settings.php" style="color:inherit;text-decoration:none;">Profile Settings</a></li>
       </ul>
@@ -19,10 +19,10 @@
     <div style="flex:1 1 220px;">
       <h4 style="color:#FF6600;margin-bottom:6px;font-size:15px;">Resources</h4>
       <ul style="list-style:none;padding:0;margin:0;color:#555;line-height:1.8;font-size:14px;">
-        <li><a href="/aboutus.php" style="color:inherit;text-decoration:none;">About Us</a></li>
-        <li><a href="/blog.php" style="color:inherit;text-decoration:none;">Blog & Tips</a></li>
-        <li><a href="/generate_cv.php" style="color:inherit;text-decoration:none;">Resume Builder</a></li>
-        <li><a href="/user/templates/template-compact.js" style="color:inherit;text-decoration:none;">Resume Templates</a></li>
+        <li><a href="#" style="color:inherit;text-decoration:none;">About Us</a></li>
+        <li><a href="#" style="color:inherit;text-decoration:none;">Blog & Tips</a></li>
+        <li><a href="#" style="color:inherit;text-decoration:none;">Resume Builder</a></li>
+        <li><a href="#" style="color:inherit;text-decoration:none;">Resume Templates</a></li>
       </ul>
     </div>
 
