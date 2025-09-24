@@ -32,7 +32,7 @@ include_once('../includes/header_jobseeker.php');
     .hint { color: var(--muted); font-size: 13px; padding: 10px 18px 0; }
     .spinner { width:18px; height:18px; border:2px solid rgba(0,0,0,.06); border-top-color:#fff; border-radius:50%; animation:spin 1s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .examples { display:flex; gap:10px; flex-wrap:wrap; padding: 0 18px 14px; }
+  .examples { display:flex; gap:10px; flex-wrap:wrap; margin-top: 8px; padding: 0 18px 14px; }
     .examples button { background:#f8fafc; color:#0b2a66; border:1px solid #e6eefc; padding:8px 12px; border-radius:8px; cursor:pointer; }
     .toolbar { display:flex; gap:10px; align-items:center; padding:10px 18px; }
     .toolbar label { font-size:13px; color:var(--muted); display:flex; gap:6px; align-items:center; }
@@ -68,7 +68,7 @@ When asked for code or examples, provide short, clear snippets. If asked about t
         <h2>AI Job Assistant</h2>
       </div>
       <div class="hint">Ask about skills to learn, interview prep, resume bullets, or tailoring to a specific job.</div>
-      <div class="toolbar">
+      <!-- <div class="toolbar">
         <label><input type="checkbox" id="debugToggle"> Enable debug (show raw response when assistant reply is empty)</label>
         <div class="model-picker" style="margin-left:12px;">
           <div class="model-label">Model</div>
@@ -81,7 +81,7 @@ When asked for code or examples, provide short, clear snippets. If asked about t
           </div>
           <div class="model-info" id="modelInfo">Fast experimental Gemini (vision & text)</div>
         </div>
-      </div>
+      </div> -->
       <div class="examples">
         <button data-eg="List 5 in-demand skills for a junior web developer and beginner resources.">Skills for junior web developer</button>
         <button data-eg="Mock interview: ask me 3 backend questions one by one and wait for my answer.">Mock interview</button>
