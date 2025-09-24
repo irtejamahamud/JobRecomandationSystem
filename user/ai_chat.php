@@ -186,35 +186,55 @@ When asked for code or examples, provide short, clear snippets. If asked about t
       try {
   const modelEl = document.getElementById('modelSelect');
   const model = (modelEl && modelEl.value) ? modelEl.value : 'google/gemini-2.0-flash-exp:free';
-  const payload = { model, messages: history };
-        if (debugToggle && debugToggle.checked) payload.debug = true;
-        const res = await fetch('../ajax/openrouter_chat.php', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        if (!res.ok) {
-          const txt = await res.text();
-          throw new Error('Server returned ' + res.status + ': ' + txt);
-        }
-        const data = await res.json();
-        const reply = data.reply || '';
-        if (!reply) {
-          // Show raw JSON if available and debug enabled
-          if (data.raw && payload.debug) {
-            rawEl.style.display = 'block';
-            rawEl.textContent = JSON.stringify(data.raw, null, 2);
-          } else {
-            rawEl.style.display = 'none';
-          }
-          addMessage('assistant', 'Sorry, I did not get a clear reply. Toggle debug to view raw response.');
-          // push a placeholder to history so conversation stays in sync
-          history.push({ role: 'assistant', content: '' });
-        } else {
-          rawEl.style.display = 'none';
-          addMessage('assistant', reply);
-          history.push({ role: 'assistant', content: reply });
-        }
+  const isGemini = /gemini/i.test(model);
+  if (isGemini) {
+    // Call native Gemini proxy for reliability; send only the latest message (plus system hint)
+    const composed = `${SYSTEM_PROMPT}\n\nUser: ${text}`;
+    const res = await fetch('../ajax/gemini_chat.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'message=' + encodeURIComponent(composed)
+    });
+    if (!res.ok) {
+      const txt = await res.text();
+      throw new Error('Server returned ' + res.status + ': ' + txt);
+    }
+    const data = await res.json();
+    const reply = data.reply || '';
+    rawEl.style.display = 'none';
+    addMessage('assistant', reply || 'No response.');
+    history.push({ role: 'assistant', content: reply });
+  } else {
+    // Fallback to OpenRouter for non-Gemini models
+    const payload = { model, messages: history };
+    if (debugToggle && debugToggle.checked) payload.debug = true;
+    const res = await fetch('../ajax/openrouter_chat.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) {
+      const txt = await res.text();
+      throw new Error('Server returned ' + res.status + ': ' + txt);
+    }
+    const data = await res.json();
+    const reply = data.reply || '';
+    if (!reply) {
+      // Show raw JSON if available and debug enabled
+      if (data.raw && payload.debug) {
+        rawEl.style.display = 'block';
+        rawEl.textContent = JSON.stringify(data.raw, null, 2);
+      } else {
+        rawEl.style.display = 'none';
+      }
+      addMessage('assistant', 'Sorry, I did not get a clear reply. Toggle debug to view raw response.');
+      history.push({ role: 'assistant', content: '' });
+    } else {
+      rawEl.style.display = 'none';
+      addMessage('assistant', reply);
+      history.push({ role: 'assistant', content: reply });
+    }
+  }
       } catch (err) {
         console.error(err);
         addMessage('assistant', 'Error: ' + (err.message || 'Unknown error. Please try again.'));
