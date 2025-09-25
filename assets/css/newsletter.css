@@ -1,0 +1,28 @@
+/* assets/css/newsletter.css - styles for newsletter subscription page */
+
+.container { max-width:1100px; margin:0 auto; padding:0 16px; }
+
+.newsletter-card { display:flex; gap:30px; background:#fff; border-radius:12px; padding:28px; box-shadow:0 8px 30px rgba(15,23,42,.06); border:1px solid #eef2ff; align-items:stretch; }
+.newsletter-left { flex:1; }
+.newsletter-left h1 { margin:0 0 8px; font-size:26px; color:#0b1a2b; }
+.newsletter-left p { color:#6b7280; margin-bottom:12px; }
+.newsletter-left ul { padding-left:18px; color:#0b2a66; }
+.newsletter-left li { margin:6px 0; }
+
+.newsletter-form { width:360px; background:linear-gradient(180deg,#fbfdff,#f5f8fb); padding:20px; border-radius:10px; border:1px solid #f1f5f9; }
+.newsletter-form label { display:block; font-weight:600; margin-bottom:6px; color:#0b1a2b; }
+.newsletter-form input[type="email"] { width:100%; padding:12px; border-radius:8px; border:1px solid #e6eefc; margin-bottom:12px; }
+.newsletter-form .muted { font-size:13px; color:#6b7280; margin-top:10px; }
+
+.notice { padding:10px 12px; border-radius:8px; margin-bottom:12px; font-weight:600; }
+.notice.success { background:#eef6ff; color:#0b2a66; border:1px solid #d7e7ff; }
+.notice.error { background:#fff4f4; color:#6b1a1a; border:1px solid #ffd7d7; }
+
+/* reuse site button styles if present, fallback */
+.btn-solid { background:#0066ff; color:#fff; border:none; padding:10px 14px; border-radius:8px; display:inline-block; font-weight:700; cursor:pointer; }
+.btn-solid:disabled { opacity:.6; cursor:not-allowed; }
+
+@media (max-width:900px) {
+  .newsletter-card { flex-direction:column; }
+  .newsletter-form { width:100%; }
+}
