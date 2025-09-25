@@ -29,6 +29,7 @@ include_once('../includes/header_jobseeker.php');
     .composer textarea { flex:1; resize:none; height:56px; padding:12px; border-radius: 10px; border:1px solid #e6eefc; background:#fff; color:var(--text); outline:none; }
     .composer button { background: var(--accent); color:white; border:none; border-radius: 10px; padding: 0 18px; font-weight:600; cursor:pointer; }
     .composer button:disabled { opacity:.6; cursor:not-allowed; }
+  .composer .send-icon { margin-right: 8px; }
     .hint { color: var(--muted); font-size: 13px; padding: 10px 18px 0; }
     .spinner { width:18px; height:18px; border:2px solid rgba(0,0,0,.06); border-top-color:#fff; border-radius:50%; animation:spin 1s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
@@ -92,7 +93,7 @@ When asked for code or examples, provide short, clear snippets. If asked about t
   <div id="raw" class="raw-output" aria-hidden="true"></div>
       <div class="composer">
         <textarea id="input" placeholder="Type your message..."></textarea>
-        <button id="sendBtn"><span class="label">Send</span></button>
+        <button id="sendBtn"><i class="fa-solid fa-paper-plane send-icon" aria-hidden="true"></i> <span class="label">Send</span></button>
       </div>
     </div>
   </main>
@@ -185,7 +186,7 @@ When asked for code or examples, provide short, clear snippets. If asked about t
         sendBtn.innerHTML = '<div class="spinner"></div>';
       } else {
         sendBtn.disabled = false;
-        sendBtn.innerHTML = '<span class="label">Send</span>';
+        sendBtn.innerHTML = '<i class="fa-solid fa-paper-plane send-icon" aria-hidden="true"></i> <span class="label">Send</span>';
       }
     }
 
