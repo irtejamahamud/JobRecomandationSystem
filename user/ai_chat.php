@@ -103,7 +103,7 @@ When asked for code or examples, provide short, clear snippets. If asked about t
   const sendBtn = document.getElementById('sendBtn');
   const debugToggle = document.getElementById('debugToggle');
   const rawEl = document.getElementById('raw');
-  // model picker elements
+  // model picker elements (may be absent because toolbar is commented out)
   // modelSelect will be queried at send time (hidden input created dynamically)
   const modelSelectEl = document.getElementById('modelSelectEl');
   const modelCurrent = document.getElementById('modelCurrent');
@@ -117,38 +117,50 @@ When asked for code or examples, provide short, clear snippets. If asked about t
     hiddenModelInput.type = 'hidden';
     hiddenModelInput.id = 'modelSelect';
     hiddenModelInput.value = 'google/gemini-2.0-flash-exp:free';
-    document.querySelector('.toolbar').appendChild(hiddenModelInput);
+    // toolbar may be absent (commented out) so append to a safe parent
+    const toolbarEl = document.querySelector('.toolbar');
+    if (toolbarEl) {
+      toolbarEl.appendChild(hiddenModelInput);
+    } else {
+      // append to chat card so it's present in the page and retrievable by id
+      const chatCard = document.querySelector('.chat-card') || document.body;
+      chatCard.appendChild(hiddenModelInput);
+    }
   }
 
-  // Toggle list
-  modelCurrent && modelCurrent.addEventListener('click', () => {
-    const open = modelList.style.display === 'block';
-    modelList.style.display = open ? 'none' : 'block';
-    modelList.setAttribute('aria-hidden', open ? 'true' : 'false');
-  });
+  // Toggle list (only if modelCurrent and modelList exist)
+  if (modelCurrent && modelList) {
+    modelCurrent.addEventListener('click', () => {
+      const open = modelList.style.display === 'block';
+      modelList.style.display = open ? 'none' : 'block';
+      modelList.setAttribute('aria-hidden', open ? 'true' : 'false');
+    });
+  }
 
-  // Click outside to close
+  // Click outside to close (only if modelSelectEl and modelList exist)
   document.addEventListener('click', (e) => {
-    if (!modelSelectEl.contains(e.target)) {
+    if (modelSelectEl && modelList && !modelSelectEl.contains(e.target)) {
       modelList.style.display = 'none';
       modelList.setAttribute('aria-hidden', 'true');
     }
   });
 
-  // Select model
-  modelList.querySelectorAll('li').forEach(li => {
-    li.addEventListener('click', () => {
-      modelList.querySelectorAll('li').forEach(x => x.classList.remove('selected'));
-      li.classList.add('selected');
-      const value = li.getAttribute('data-value');
-      const label = li.querySelector('strong')?.innerText || value;
-      const meta = li.querySelector('.meta')?.innerText || '';
-      modelCurrent.innerHTML = label + ' <span class="badge">free</span> <i class="fa fa-caret-down"></i>';
-      modelInfo.textContent = meta;
-      hiddenModelInput.value = value;
-      modelList.style.display = 'none';
+  // Select model (only if modelList exists)
+  if (modelList) {
+    modelList.querySelectorAll('li').forEach(li => {
+      li.addEventListener('click', () => {
+        modelList.querySelectorAll('li').forEach(x => x.classList.remove('selected'));
+        li.classList.add('selected');
+        const value = li.getAttribute('data-value');
+        const label = li.querySelector('strong')?.innerText || value;
+        const meta = li.querySelector('.meta')?.innerText || '';
+        if (modelCurrent) modelCurrent.innerHTML = label + ' <span class="badge">free</span> <i class="fa fa-caret-down"></i>';
+        if (modelInfo) modelInfo.textContent = meta;
+        if (hiddenModelInput) hiddenModelInput.value = value;
+        modelList.style.display = 'none';
+      });
     });
-  });
+  }
 
     const history = [ { role: 'system', content: SYSTEM_PROMPT } ];
 
