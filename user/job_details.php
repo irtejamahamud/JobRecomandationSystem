@@ -27,11 +27,12 @@ $stmt2 = $conn->prepare("SELECT * FROM job_details WHERE job_id = :job_id");
 $stmt2->execute([':job_id' => $job_id]);
 $job_details = $stmt2->fetch(PDO::FETCH_ASSOC);
 
-// Fetch related jobs based on same job_role or tags
+// Fetch related jobs based on same job_role or tags, include company logo/name
 $relatedStmt = $conn->prepare("
-    SELECT * FROM jobs 
-    WHERE job_id != :job_id 
-    AND (job_role = :job_role OR FIND_IN_SET(:tag, tags)) 
+    SELECT jobs.*, cp.logo, cp.company_name FROM jobs 
+    LEFT JOIN company_profiles cp ON jobs.recruiter_id = cp.recruiter_id
+    WHERE jobs.job_id != :job_id 
+    AND (jobs.job_role = :job_role OR FIND_IN_SET(:tag, jobs.tags)) 
     ORDER BY RAND() 
     LIMIT 3
 ");
@@ -177,10 +178,17 @@ if (!$job) {
             <div class="job-left">
                 <span class="posted-time"><?= date('d M Y', strtotime($related['posted_on'])) ?></span>
                 <div class="job-header">
-                    <img src="<?= !empty($related['logo']) ? '../uploads/company/' . htmlspecialchars($related['logo']) : '../uploads/company/default_logo.png' ?>" alt="Company Logo" class="company-logo">
+                    <?php
+                      $logo = $related['logo'] ?? '';
+                      $relativeLogoPath = !empty($logo) ? '../uploads/company/' . htmlspecialchars($logo) : '';
+                      $absoluteLogoPath = !empty($logo) ? realpath(__DIR__ . '/../uploads/company/' . $logo) : false;
+                      $defaultLogo = '../assets/img/logo-default.jpg';
+                      $logoSrc = (!empty($logo) && $absoluteLogoPath && file_exists($absoluteLogoPath)) ? $relativeLogoPath : $defaultLogo;
+                    ?>
+                    <img src="<?= $logoSrc ?>" alt="Company Logo" class="company-logo">
                     <div>
                         <h4 class="job-title"><?= htmlspecialchars($related['job_title']) ?></h4>
-                        <p class="company-name"><?= htmlspecialchars($related['job_role']) ?></p>
+                        <p class="company-name"><?= htmlspecialchars($related['company_name'] ?? $related['job_role'] ?? '') ?></p>
                     </div>
                 </div>
                 <div class="job-info">
