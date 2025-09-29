@@ -1,3 +1,11 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) { session_start(); }
+require_once('../includes/db.php');
+require_once('../includes/notifications.php');
+if (!isset($_SESSION['user_id'])) { die('Unauthorized'); }
+$uid = (int)$_SESSION['user_id'];
+$items = get_notifications_for_user($conn, $uid, 30, false);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -101,27 +109,22 @@
 			<button class="close-btn" id="closeNotificationBtn">&times;</button>
 		</div>
 		<div class="notification-list">
-			<div class="notification-item">
-				<span class="notification-icon"><i class="fas fa-briefcase"></i></span>
-				<div class="notification-content">
-					<div class="notification-title">Your application for <b>Frontend Developer</b> was viewed</div>
-					<div class="notification-time">2 hours ago</div>
+			<?php if (!$items): ?>
+				<div class="notification-item" style="border-left-color:#ccc;">
+					<div class="notification-content">
+						<div class="notification-title">No notifications</div>
+					</div>
 				</div>
-			</div>
-			<div class="notification-item">
-				<span class="notification-icon"><i class="fas fa-check-circle"></i></span>
-				<div class="notification-content">
-					<div class="notification-title">Profile completed! Unlock more job matches.</div>
-					<div class="notification-time">Yesterday</div>
+			<?php else: foreach ($items as $n): ?>
+				<div class="notification-item" data-recipient-id="<?= (int)$n['recipient_id'] ?>" style="border-left-color: <?= $n['is_read'] ? '#ddd' : '#ff6600' ?>;">
+					<span class="notification-icon"><i class="fas fa-bell"></i></span>
+					<div class="notification-content">
+						<div class="notification-title"><?= htmlspecialchars($n['title'] ?? '') ?></div>
+						<?php if (!empty($n['body'])): ?><div class="notification-time"><?= htmlspecialchars($n['body']) ?></div><?php endif; ?>
+						<div class="notification-time"><?= htmlspecialchars($n['created_at']) ?></div>
+					</div>
 				</div>
-			</div>
-			<div class="notification-item">
-				<span class="notification-icon"><i class="fas fa-bell"></i></span>
-				<div class="notification-content">
-					<div class="notification-title">New job alert: <b>UI/UX Designer</b> in your area</div>
-					<div class="notification-time">3 days ago</div>
-				</div>
-			</div>
+			<?php endforeach; endif; ?>
 		</div>
 	</div>
 
@@ -137,6 +140,21 @@
 					window.parent.postMessage('closeNotification', '*');
 				}
 			};
+
+			// Mark as read when clicking on an item
+			document.querySelector('.notification-list').addEventListener('click', function(e){
+				const item = e.target.closest('.notification-item');
+				if (!item) return;
+				const rid = item.getAttribute('data-recipient-id');
+				if (!rid) return;
+				fetch('../ajax/notifications.php', {
+					method: 'POST',
+					headers: {'Content-Type':'application/x-www-form-urlencoded'},
+					body: 'action=mark_read&recipient_id=' + encodeURIComponent(rid)
+				}).then(()=>{
+					item.style.borderLeftColor = '#ddd';
+				});
+			});
 		});
 	</script>
 </body>

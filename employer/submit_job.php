@@ -1,6 +1,7 @@
 <?php
 session_start();
 include('../includes/db.php');
+include_once('../includes/notifications.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['user_id'])) {
     $recruiter_id = $_SESSION['user_id'];
@@ -85,6 +86,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['user_id'])) {
         ]);
 
         $conn->commit();
+
+        // 🔔 Notify potential seekers (simple heuristic: same city or match skill keyword)
+        try {
+            $recipients = [];
+            // Select job seekers by city match OR any skill keyword match
+            $seekStmt = $conn->prepare("SELECT DISTINCT js.job_seeker_id AS uid
+                                        FROM job_seekers js
+                                        LEFT JOIN job_seeker_skills jss ON jss.job_seeker_id = js.job_seeker_id
+                                        LEFT JOIN skill_master sm ON sm.id = jss.skill_id
+                                        WHERE (js.address LIKE CONCAT('%', :city, '%'))
+                                           OR (FIND_IN_SET(sm.name, :skillsList))");
+            // Build skills list CSV trimmed
+            $skillsList = implode(',', array_filter(array_map('trim', explode(',', (string)$skills))));
+            $seekStmt->execute([':city'=>$city, ':skillsList'=>$skillsList]);
+            while ($row = $seekStmt->fetch(PDO::FETCH_ASSOC)) {
+                if (!empty($row['uid'])) $recipients[] = (int)$row['uid'];
+            }
+            $recipients = array_values(array_unique($recipients));
+            if (!empty($recipients)) {
+                $actor = $_SESSION['user_id'] ?? null;
+                $title = 'New job posted: ' . $job_title;
+                $body  = $description ? mb_substr($description, 0, 140) . (mb_strlen($description)>140?'...':'') : '';
+                add_notification($conn, $actor, 'job_posted', $title, $body, 'job', (int)$job_id, $recipients, ['city'=>$city,'category'=>$category]);
+            }
+        } catch (Throwable $e) {
+            // Silently ignore targeting errors
+        }
+
         header("Location: post_job.php?success=1");
         exit;
     } catch (PDOException $e) {

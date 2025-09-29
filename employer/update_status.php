@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("../includes/db.php");
+include_once("../includes/notifications.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'], $_POST['status'], $_POST['job_id'])) {
     $email = trim($_POST['email']);
@@ -35,6 +36,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'], $_POST['stat
                 ':uid' => $job_seeker_id,
                 ':jobid' => $job_id
             ]);
+
+            // 🔔 Notify the job seeker about status update
+            $actor = $_SESSION['user_id'] ?? null; // recruiter acting
+            $title = 'Application status updated';
+            $body  = 'Your application status was updated to ' . $status . ' for Job ID #' . $job_id;
+            add_notification($conn, $actor, 'status_update', $title, $body, 'job', $job_id, [$job_seeker_id], ['status'=>$status,'job_id'=>$job_id]);
 
             $_SESSION['success'] = "Status updated for this job application.";
         } else {
