@@ -71,11 +71,15 @@ include('../includes/header_jobseeker.php'); ?>
   .cv-sidebar { background:#fff; border:1px solid #eceff7; border-radius:14px; padding:16px; box-shadow:0 6px 18px rgba(31,40,105,0.06); height:fit-content; position:sticky; top:80px; }
   .cv-sidebar h2 { margin:0 0 14px; font-size:18px; color:#1f2869; }
   .tpl-grid { display:grid; gap:14px; }
-  .tpl-card { border:1px solid #e4e9f5; border-radius:12px; padding:10px; background:#f8faff; cursor:pointer; position:relative; transition:.15s; }
+  .tpl-card { border:1px solid #e4e9f5; border-radius:12px; padding:10px; background:#f8faff; cursor:pointer; position:relative; transition:.15s; display:flex; flex-direction:column; gap:8px; }
   .tpl-card:hover { box-shadow:0 4px 16px rgba(31,40,105,0.10); transform:translateY(-2px); }
   .tpl-card.active { outline:2px solid #3843d0; background:#eef3ff; }
   .tpl-card .tpl-name { font-size:12px; font-weight:600; margin-top:6px; color:#1f2869; text-align:center; }
   .tpl-card .tpl-badge { position:absolute; top:6px; right:6px; background:#0b7d3e; color:#fff; font-size:10px; padding:2px 6px; border-radius:999px; }
+  /* Constrain preview box so it doesn't overlap the main CV */
+  .tpl-preview { height:96px; overflow:hidden; border-radius:8px; background:#fff; border:1px solid #e6ecff; display:flex; align-items:center; justify-content:center; }
+  /* Backward safety: if a template wrote raw preview at top level, still clamp it */
+  .tpl-card > :first-child { max-height:96px; overflow:hidden; }
   .cv-main { min-height:400px; }
   .cv-render-target { position:relative; }
   .cv-toolbar { display:flex; gap:10px; justify-content:flex-end; margin-bottom:12px; }
@@ -156,7 +160,8 @@ include('../includes/header_jobseeker.php'); ?>
         const card = document.createElement('div');
         card.className = 'tpl-card' + (t.id === active ? ' active':'' );
         card.dataset.id = t.id;
-        card.innerHTML = (t.renderPreview ? t.renderPreview() : '') + `<div class="tpl-name">${t.name}</div>` + (t.badge?`<div class=\"tpl-badge\">${t.badge}</div>`:'');
+        const previewHTML = (t.renderPreview ? t.renderPreview() : '');
+        card.innerHTML = `<div class="tpl-preview">${previewHTML}</div><div class="tpl-name">${t.name}</div>` + (t.badge?`<div class="tpl-badge">${t.badge}</div>`:'');
         card.addEventListener('click', () => { active = t.id; renderTemplateButtons(); applyTemplate(); });
         listEl.appendChild(card);
       });
