@@ -72,7 +72,7 @@ $company = $stmt->fetch(PDO::FETCH_ASSOC);
   </div>
 
   <div class="form-group">
-    <label><i class="fas fa-envelope"></i> <strong>Email:</strong></label>
+    <label><i class="fas fa-envelope"></i> <strong>E-mail:</strong></label>
     <p><?= htmlspecialchars($company['email'] ?? 'N/A') ?></p>
   </div>
 
