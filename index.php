@@ -68,7 +68,7 @@
     <div class="featured-jobs-heading">
       <div>
         <h2>Featured Jobs</h2>
-        <p>Choose jobs from the top employers and apply for the same.</p>
+        <p>Choose Jobs from the top employers and apply for the same.</p>
       </div>
     </div>
 
