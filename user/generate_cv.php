@@ -66,28 +66,173 @@ $latestResume = $resumeStmt->fetchColumn();
 include('../includes/header_jobseeker.php'); ?>
 
 <style>
-  body { background:#f6f7fb; font-family:'Poppins',Arial,sans-serif; }
-  .cv-layout { display:grid; grid-template-columns:240px 1fr; gap:20px; max-width:1280px; margin:24px auto; padding:0 16px; }
-  .cv-sidebar { background:#fff; border:1px solid #eceff7; border-radius:14px; padding:16px; box-shadow:0 6px 18px rgba(31,40,105,0.06); height:fit-content; position:sticky; top:80px; }
-  .cv-sidebar h2 { margin:0 0 14px; font-size:18px; color:#1f2869; }
-  .tpl-grid { display:grid; gap:14px; }
-  .tpl-card { border:1px solid #e4e9f5; border-radius:12px; padding:10px; background:#f8faff; cursor:pointer; position:relative; transition:.15s; display:flex; flex-direction:column; gap:8px; }
-  .tpl-card:hover { box-shadow:0 4px 16px rgba(31,40,105,0.10); transform:translateY(-2px); }
-  .tpl-card.active { outline:2px solid #3843d0; background:#eef3ff; }
-  .tpl-card .tpl-name { font-size:12px; font-weight:600; margin-top:6px; color:#1f2869; text-align:center; }
-  .tpl-card .tpl-badge { position:absolute; top:6px; right:6px; background:#0b7d3e; color:#fff; font-size:10px; padding:2px 6px; border-radius:999px; }
-  /* Constrain preview box so it doesn't overlap the main CV */
-  .tpl-preview { height:96px; overflow:hidden; border-radius:8px; background:#fff; border:1px solid #e6ecff; display:flex; align-items:center; justify-content:center; }
-  /* Backward safety: if a template wrote raw preview at top level, still clamp it */
-  .tpl-card > :first-child { max-height:96px; overflow:hidden; }
-  .cv-main { min-height:400px; }
-  .cv-render-target { position:relative; }
-  .cv-toolbar { display:flex; gap:10px; justify-content:flex-end; margin-bottom:12px; }
-  .cv-toolbar button, .cv-toolbar a { background:#3843d0; color:#fff; border:none; padding:10px 14px; border-radius:8px; cursor:pointer; font-weight:600; display:inline-flex; align-items:center; gap:6px; text-decoration:none; }
-  .cv-toolbar button.secondary { background:#0b7d3e; }
-  .cv-toolbar button.outline { background:#fff; color:#3843d0; border:1px solid #3843d0; }
-  @media print { .cv-sidebar, .cv-toolbar, .site-header, .site-footer { display:none !important; } body { background:#fff; } }
+  body {
+    background: #f6f7fb;
+    font-family: 'Poppins', Arial, sans-serif;
+  }
+
+  .cv-layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 24px;
+    max-width: 1300px;
+    margin: 30px auto;
+    padding: 0 20px;
+  }
+
+  /* Sidebar Styling */
+  .cv-sidebar {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 20px 18px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 90px;
+    height: fit-content;
+    transition: all 0.2s ease;
+  }
+
+  .cv-sidebar:hover {
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.07);
+  }
+
+  .cv-sidebar h2 {
+    margin: 0 0 18px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #1f2869;
+    text-align: center;
+    border-bottom: 2px solid #e5e9f7;
+    padding-bottom: 8px;
+  }
+
+  /* Template grid */
+  .tpl-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* Template cards */
+  .tpl-card {
+    background: #f9fbff;
+    border: 1px solid #e3e8f9;
+    border-radius: 14px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 8px 12px;
+    position: relative;
+  }
+
+  .tpl-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 14px rgba(56, 67, 208, 0.12);
+  }
+
+  .tpl-card.active {
+    border: 2px solid #3843d0;
+    background: #eef3ff;
+    box-shadow: 0 0 0 3px rgba(56, 67, 208, 0.1);
+  }
+
+  .tpl-preview {
+    width: 100%;
+    height: 100px;
+    border-radius: 8px;
+    background: #fff;
+    border: 1px solid #e5e9f7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .tpl-name {
+    margin-top: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #1f2869;
+    text-align: center;
+    letter-spacing: 0.3px;
+  }
+
+  .tpl-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #0b7d3e;
+    color: #fff;
+    font-size: 10px;
+    padding: 3px 7px;
+    border-radius: 999px;
+    letter-spacing: 0.4px;
+  }
+
+  /* Main Section */
+  .cv-main {
+    min-height: 400px;
+  }
+
+  .cv-toolbar {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-bottom: 16px;
+  }
+
+  .cv-toolbar button,
+  .cv-toolbar a {
+    background: #3843d0;
+    color: #fff;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    transition: 0.2s;
+  }
+
+  .cv-toolbar button:hover,
+  .cv-toolbar a:hover {
+    background: #2e36b4;
+  }
+
+  .cv-toolbar button.secondary {
+    background: #0b7d3e;
+  }
+
+  .cv-toolbar button.secondary:hover {
+    background: #096433;
+  }
+
+  .cv-toolbar button.outline {
+    background: #fff;
+    color: #3843d0;
+    border: 1px solid #3843d0;
+  }
+
+  @media print {
+    .cv-sidebar,
+    .cv-toolbar,
+    .site-header,
+    .site-footer {
+      display: none !important;
+    }
+    body {
+      background: #fff;
+    }
+  }
 </style>
+
 
 <div class="cv-layout">
   <aside class="cv-sidebar no-print">
