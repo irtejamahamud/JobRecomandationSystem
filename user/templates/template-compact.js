@@ -19,7 +19,18 @@
   };
 
   function renderPreview() {
-    return `<div style="width:88%;height:78%;border:2px dashed #cbd3ff;border-radius:6px;"></div>`;
+    return `
+      <div style="width:88%;height:78%;border-radius:8px;overflow:hidden;display:flex;box-shadow:0 6px 18px rgba(31,40,105,0.06);">
+        <div style="width:36%;background:linear-gradient(180deg,#3843d0,#2563eb);padding:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;">
+          <div style="width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,0.12);margin-bottom:8px"></div>
+          <div style="font-weight:700;font-size:12px">Full Name</div>
+          <div style="font-size:11px;opacity:0.9;margin-top:6px">Job Title</div>
+        </div>
+        <div style="flex:1;padding:10px;background:#fff;display:flex;flex-direction:column;justify-content:center;">
+          <div style="height:8px;background:#eef4ff;border-radius:4px;width:70%;margin-bottom:8px"></div>
+          <div style="height:6px;background:#f6f8ff;border-radius:4px;width:90%"></div>
+        </div>
+      </div>`;
   }
 
   function item(label, value) {
@@ -81,82 +92,52 @@
 
     return `
       <style>
-        .cv-compact { max-width: 820px; margin: 16px auto; background:#fff; border-radius: 12px; padding: 18px; box-shadow: 0 6px 22px rgba(31,40,105,0.08); }
-        .cv-compact .head { display: grid; grid-template-columns: 80px 1fr; gap: 14px; border-bottom: 2px solid #f0f2ff; padding-bottom: 12px; }
-        .cv-compact img { width: 80px; height: 80px; border-radius: 8px; object-fit: cover; }
-        .cv-compact h1 { margin: 0; font-size: 24px; color:#1f2869; }
-        .cv-compact .role { color:#3843d0; font-weight:600; margin-top:2px; }
-        .cv-compact .rows { display:grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; margin-top: 8px; }
-        .cv-compact .row { font-size: 13px; color:#333; display:flex; gap: 8px; }
-        .cv-compact .row span { color:#667; min-width: 70px; }
-        .cv-compact section { margin-top: 14px; }
-        .cv-compact h3 { margin: 0 0 8px; font-size: 14px; color:#0b7d3e; text-transform: uppercase; letter-spacing: .4px; }
-        .cv-compact ul { margin: 0; padding-left: 16px; }
-        .cv-compact .muted { color:#666; font-size: 12px; margin-top: 2px; }
-        @media print { .cv-compact { box-shadow:none; border-radius:0; } }
+        .cv-compact { max-width: 880px; margin: 18px auto; background: linear-gradient(180deg,#ffffff,#fbfdff); border-radius:12px; box-shadow:0 8px 28px rgba(31,40,105,0.08); overflow:hidden; }
+        .cv-compact .inner { display:grid; grid-template-columns: 260px 1fr; gap:20px; padding:18px; }
+        .cv-compact .sidebar { background:linear-gradient(180deg,#3843d0,#2563eb); color:#fff; padding:18px; border-radius:8px; }
+        .cv-compact .avatar { width:88px;height:88px;border-radius:12px;object-fit:cover;margin:0 auto 10px;box-shadow:0 6px 18px rgba(0,0,0,0.25); }
+        .cv-compact .name{ text-align:center;font-size:20px;margin:6px 0 2px;font-weight:700;color:#fff }
+        .cv-compact .role{ text-align:center;color:rgba(255,255,255,0.9);font-weight:600 }
+        .cv-compact .contact{ margin-top:12px;font-size:13px; }
+        .cv-compact .contact div{ display:flex;gap:8px;align-items:center;padding:6px 0;color:rgba(255,255,255,0.95) }
+        .cv-compact .skills{ margin-top:12px; display:flex; flex-wrap:wrap; gap:8px }
+        .cv-compact .chip{ background: rgba(255,255,255,0.12); padding:6px 8px;border-radius:999px;font-size:13px }
+
+        .cv-compact .content{ padding:6px 2px; }
+        .cv-compact h3{ margin:0 0 8px;color:#1f2869;font-size:14px }
+        .cv-compact .section{ background:#fff;padding:12px;border-radius:8px;margin-bottom:12px; box-shadow:0 2px 10px rgba(0,0,0,0.03) }
+        .cv-compact ul{ margin:0;padding-left:16px }
+        .cv-compact li{ margin-bottom:8px }
+        .cv-compact .muted{ color:#666;font-size:13px }
+
+        .proj-link{ color:#2563eb;text-decoration:none }
+        .proj-link:hover{ text-decoration:underline }
+
+        @media (max-width:800px){ .cv-compact .inner{ grid-template-columns:1fr; } .cv-compact .sidebar{ order:2 } }
       </style>
+
       <div class="cv-compact">
-        <div class="head">
-          <img src="${esc(d.profileImg)}" alt="Profile">
-          <div>
-            <h1>${esc(d.fullName)}</h1>
-            <div class="role">${esc(d.jobTitle || "Job Seeker")}</div>
-            <div class="rows">
-              ${item("Email", d.email)}${item("Phone", d.mobile)}${item(
-      "Website",
-      d.website
-    )}
-              ${item("Address", d.address)}${item(
-      "DOB",
-      d.dob ? U.fmtDate(d.dob) : ""
-    )}${item("Gender", d.gender)}
+        <div class="inner">
+          <div class="sidebar">
+            <img class="avatar" src="${esc(d.profileImg)}" alt="Profile">
+            <div class="name">${esc(d.fullName)}</div>
+            <div class="role">${esc(d.jobTitle||'Job Seeker')}</div>
+            <div class="contact">
+              ${d.email?`<div><i class="fas fa-envelope"></i><span>${esc(d.email)}</span></div>`:''}
+              ${d.mobile?`<div><i class="fas fa-phone"></i><span>${esc(d.mobile)}</span></div>`:''}
+              ${d.website?`<div><i class="fas fa-globe"></i><span>${esc(d.website)}</span></div>`:''}
             </div>
+            ${ skills ? `<div class="skills">${(d.skills||[]).map(s=>`<span class="chip">${esc(s.name)}</span>`).join('')}</div>` : '' }
+          </div>
+          <div class="content">
+            ${ d.bio?`<div class="section"><h3>Summary</h3><div class="muted">${U.nl2br(d.bio)}</div></div>`:'' }
+            ${ (d.experiences||[]).length?`<div class="section"><h3>Experience</h3><ul>${exp}</ul></div>`:'' }
+            ${ (d.educations||[]).length?`<div class="section"><h3>Education</h3><ul>${edu}</ul></div>`:'' }
+            ${ (d.projects||[]).length?`<div class="section"><h3>Projects</h3><ul>${projs.replace(/href="/g,'class="proj-link" href="')}</ul></div>`:'' }
+            ${ (d.certifications||[]).length?`<div class="section"><h3>Certifications</h3><ul>${certs}</ul></div>`:'' }
+            ${ d.latestResume?`<div class="section"><a href="${esc(d.latestResume)}" target="_blank"><i class="fas fa-file-pdf"></i> View Latest Uploaded Resume</a></div>`:'' }
           </div>
         </div>
-
-        ${
-          d.bio
-            ? `<section><h3>Summary</h3><div>${U.nl2br(d.bio)}</div></section>`
-            : ""
-        }
-
-        ${
-          (d.experiences || []).length
-            ? `<section><h3>Experience</h3><ul>${exp}</ul></section>`
-            : ""
-        }
-        ${
-          (d.educations || []).length
-            ? `<section><h3>Education</h3><ul>${edu}</ul></section>`
-            : ""
-        }
-        ${
-          skills
-            ? `<section><h3>Skills</h3><div>${esc(skills)}</div></section>`
-            : ""
-        }
-        ${
-          langs
-            ? `<section><h3>Languages</h3><div>${esc(langs)}</div></section>`
-            : ""
-        }
-        ${
-          (d.projects || []).length
-            ? `<section><h3>Projects</h3><ul>${projs}</ul></section>`
-            : ""
-        }
-        ${
-          (d.certifications || []).length
-            ? `<section><h3>Certifications</h3><ul>${certs}</ul></section>`
-            : ""
-        }
-        ${
-          d.latestResume
-            ? `<section><a href="${esc(
-                d.latestResume
-              )}" target="_blank"><i class="fas fa-file-pdf"></i> View Latest Uploaded Resume</a></section>`
-            : ""
-        }
       </div>
     `;
   }
