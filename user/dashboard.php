@@ -36,22 +36,24 @@ $stmt3->execute([':user_id' => $user_id]);
 $recent_jobs = $stmt3->fetchAll(PDO::FETCH_ASSOC);
 
 // Dynamically calculate profile completion
-$stmt4 = $conn->prepare("
-  SELECT biography, cover_letter, linkedin_link, marital_status
-  FROM job_seeker_profiles
-  WHERE job_seeker_id = :user_id
-");
-$stmt4->execute([':user_id' => $user_id]);
-$profile = $stmt4->fetch(PDO::FETCH_ASSOC);
+        // Dynamically calculate profile completion (aligned with profile_progress.php)
+        $stmt4 = $conn->prepare("
+          SELECT biography, cover_letter, linkedin_link, marital_status,
+                 facebook_link, twitter_link, reddit_link, instagram_link, youtube_link
+          FROM job_seeker_profiles
+          WHERE job_seeker_id = :user_id
+        ");
+        $stmt4->execute([':user_id' => $user_id]);
+        $profile = $stmt4->fetch(PDO::FETCH_ASSOC) ?: [];
 
-$filled_fields = 0;
-$total_fields = count($profile);
+        $filled_fields = 0;
+        $total_fields = count($profile);
 
-foreach ($profile as $value) {
-  if (!empty($value)) $filled_fields++;
-}
+        foreach ($profile as $value) {
+          if (!empty($value)) $filled_fields++;
+        }
 
-$completion = ($total_fields > 0) ? round(($filled_fields / $total_fields) * 100) : 0;
+        $completion = ($total_fields > 0) ? round(($filled_fields / $total_fields) * 100) : 0;
 ?>
 
 <link rel="stylesheet" href="../assets/css/jobseeker_style.css">
@@ -91,7 +93,7 @@ $completion = ($total_fields > 0) ? round(($filled_fields / $total_fields) * 100
     <div class="fallback-avatar"><i class="fas fa-user"></i></div>
   </div>
   <div class="reminder-text">
-    <?php if ($completion < 90): ?>
+    <?php if ($completion < 80): ?>
       <h4>Your profile is incomplete</h4>
       <p>Complete your profile to unlock better job matches and build your custom resume.</p>
       <a href="step1_personal.php" class="reminder-btn">Complete Now</a>
