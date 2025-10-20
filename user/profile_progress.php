@@ -37,6 +37,19 @@ $completion = ($total_fields > 0) ? round(($filled_fields / $total_fields) * 100
 		border-radius: 16px;
 		box-shadow: 0 2px 16px rgba(0,0,0,0.07);
 	}
+
+
+	/* CTA button */
+	.complete-profile-btn {
+		display: inline-block;
+		margin-top: 14px;
+		padding: 10px 16px;
+		background: #e5731dff;
+		color: #fff;
+		border-radius: 8px;
+		text-decoration: none;
+		font-weight: 600;
+	}
 	.dashboard-title {
 		font-size: 2rem;
 		font-weight: 700;
@@ -149,6 +162,7 @@ $completion = ($total_fields > 0) ? round(($filled_fields / $total_fields) * 100
 				<?= $completion ?>%
 			</div>
 		</div>
+		<a href="step1_personal.php" class="complete-profile-btn">Complete Profile</a>
 		<?php if ($completion < 100): ?>
 			<div class="alert alert-warning">Your profile is incomplete. Complete all sections for better job matches!</div>
 		<?php else: ?>
@@ -173,4 +187,4 @@ $completion = ($total_fields > 0) ? round(($filled_fields / $total_fields) * 100
 	</div>
 </div>
 
-<?php include("../includes/footer_jobseeker.php"); ?>
+<!-- <?php include("../includes/footer_jobseeker.php"); ?> -->
