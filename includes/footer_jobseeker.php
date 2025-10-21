@@ -10,8 +10,8 @@
       <h4 style="color:#FF6600;margin-bottom:6px;font-size:15px;">Quick links</h4>
       <ul style="list-style:none;padding:0;margin:0;color:#555;line-height:1.8;font-size:14px;">
         <li><a href="/user/dashboard.php" style="color:inherit;text-decoration:none;">Dashboard</a></li>
-        <li><a href="/user/job_search.php" style="color:inherit;text-decoration:none;">Find Jobs</a></li>
-        <li><a href="/user/recommended_jobs.php" style="color:inherit;text-decoration:none;">Recommended</a></li>
+        <li><a href="/user/job_search.php" style="color:inherit;text-decoration:none;">Find Recommended Jobs</a></li>
+        <!-- <li><a href="/user/recommended_jobs.php" style="color:inherit;text-decoration:none;">Recommended</a></li> -->
         <li><a href="/user/settings.php" style="color:inherit;text-decoration:none;">Profile Settings</a></li>
       </ul>
     </div>
